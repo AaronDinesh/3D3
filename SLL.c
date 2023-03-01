@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "SLL.h"
 #include <string.h>
+#include <arpa/inet.h>
 typedef struct sockaddr_in sockaddr_in;
 /*
     LL = Linked List
@@ -36,7 +37,7 @@ Node* search_list_recursive_identifier(Node* start_ptr, char* identifier){
         return start_ptr;
     }
     
-    search_list_recursive_identifier(start_ptr->next, identifier);
+    return search_list_recursive_identifier(start_ptr->next, identifier);
     
 }
 
@@ -49,11 +50,19 @@ Node* search_list_recursive_sockfd(Node* start_ptr, int sockfd){
         return start_ptr;
     }
     
-    search_list_recursive_sockfd(start_ptr->next, sockfd);
+    return search_list_recursive_sockfd(start_ptr->next, sockfd);
     
 }
 
-void print_list(Node** start_ptr_ptr){
+void print_list_ip(Node** start_ptr_ptr){
+    Node* next_ptr = *start_ptr_ptr;
+    while(next_ptr){
+        printf("IP: %s \n", inet_ntoa(next_ptr->remote_conn->sin_addr));
+        next_ptr = next_ptr->next;
+    }
+}
+
+void print_list_identifier(Node** start_ptr_ptr){
     Node* next_ptr = *start_ptr_ptr;
     while(next_ptr){
         printf("Identifier: %s \n", next_ptr->identifier);
