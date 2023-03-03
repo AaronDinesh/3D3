@@ -8,10 +8,11 @@ struct Node{
     char* identifier;
     int sockfd;
     sockaddr_in* remote_conn;
+    time_t seconds_since_conn;
     Node* next;
 };
 
-void prepend_Node(Node** start_ptr_ptr, char* identifier, int sockfd, sockaddr_in* remote_conn);
+void prepend_Node(Node** start_ptr_ptr, char* identifier, int sockfd, sockaddr_in* remote_conn, time_t seconds);
 void print_list_ip(Node** start_ptr_ptr);
 void print_list_identifier(Node** start_ptr_ptr);
 void delete_list(Node** start_ptr_ptr);

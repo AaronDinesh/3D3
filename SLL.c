@@ -3,6 +3,7 @@
 #include "SLL.h"
 #include <string.h>
 #include <arpa/inet.h>
+#include <time.h>
 typedef struct sockaddr_in sockaddr_in;
 /*
     LL = Linked List
@@ -17,12 +18,13 @@ typedef struct sockaddr_in sockaddr_in;
         Create a recursive version of this
 */
 
-void prepend_Node(Node** start_ptr_ptr, char* identifier, int sockfd, sockaddr_in* remote_conn){
+void prepend_Node(Node** start_ptr_ptr, char* identifier, int sockfd, sockaddr_in* remote_conn, time_t seconds){
     Node* newNode_ptr = (Node*)malloc(sizeof(Node));
     newNode_ptr->identifier = malloc(strlen(identifier)*sizeof(char));
     strcpy(newNode_ptr->identifier, identifier);
     newNode_ptr->sockfd = sockfd;
     newNode_ptr->remote_conn = remote_conn;
+    newNode_ptr->seconds_since_conn = seconds;
     newNode_ptr->next = *start_ptr_ptr;
     *start_ptr_ptr = newNode_ptr;
 }
