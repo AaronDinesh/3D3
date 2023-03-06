@@ -58,8 +58,10 @@ Node* search_list_recursive_sockfd(Node* start_ptr, int sockfd){
 
 void print_list_info(Node** start_ptr_ptr){
     Node* next_ptr = *start_ptr_ptr;
+    char next_ptr_ip[30] = {'\0'};        
     while(next_ptr){
-        printf("Identifier: %s,IP: %s \n", next_ptr->identifier,inet_ntoa(next_ptr->remote_conn->sin_addr.s_addr));
+        inet_ntop(AF_INET, &(next_ptr->remote_conn->sin_addr.s_addr), next_ptr_ip, INET_ADDRSTRLEN);
+        printf("Identifier: %s, IP: %s \n", next_ptr->identifier, next_ptr_ip);
         next_ptr = next_ptr->next;
     }
 }

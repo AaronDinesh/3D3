@@ -90,7 +90,9 @@ int main(){
                 printf("Could not find %s in list\n", search_buffer);
                 printf("Make sure the identifier is correct\n");
             }else{
-                printf("Result: %s with IP %s", search_return->identifier, inet_ntoa(search_return->remote_conn->sin_addr.s_addr));
+                char search_return_ip[SIZE] = {'\0'};
+                inet_ntop(AF_INET, &(search_return->remote_conn->sin_addr.s_addr), search_return_ip, INET_ADDRSTRLEN);
+                printf("Result: %s with IP %s", search_return->identifier, search_return_ip);
             }
 
         }else if(input == 5){
@@ -167,8 +169,6 @@ int connect_sever(char* name, char* ip){
             exit(1);
         }
     }
-    printf("Sent name\n");
-
     write_connection_file(sockfd);
     return sockfd;
 }
@@ -197,7 +197,7 @@ void write_connection_file(int sockfd){
 
     //While there is still something to read, read it. Timeout will occur in 1000 ms
     while(!done){
-    poll_ret = poll(&fd, 1, 1000);
+    poll_ret = poll(&fd, 1, 4000);
     switch(poll_ret){
         case -1:
             //There was an error
@@ -209,11 +209,14 @@ void write_connection_file(int sockfd){
             break;
         default:
             bytes_recv = recv(sockfd, buffer, SIZE, 0);
+            printf("Received %s\n", buffer);
             fprintf(file, "%s", buffer);
             memset(buffer, 0, SIZE);
             break;
     }
     } 
+
+    fclose(file);
 }
 
 void update_client_list(Node** client_list){
