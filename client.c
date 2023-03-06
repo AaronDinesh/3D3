@@ -90,7 +90,7 @@ int main(){
                 printf("Could not find %s in list\n", search_buffer);
                 printf("Make sure the identifier is correct\n");
             }else{
-                printf("Result: %s with IP %s", search_return->identifier, inet_ntoa(search_return->remote_conn->sin_addr));
+                printf("Result: %s with IP %s", search_return->identifier, inet_ntoa(search_return->remote_conn->sin_addr.s_addr));
             }
 
         }else if(input == 5){
@@ -237,7 +237,7 @@ void update_client_list(Node** client_list){
 
     char* token = NULL;
 
-    //REad the file and update the client list
+    //Read the file and update the client list
     while(!feof(fp)){
         fscanf(fp, "%s\n", buffer);
         token = strtok(buffer, ",");

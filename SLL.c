@@ -59,7 +59,7 @@ Node* search_list_recursive_sockfd(Node* start_ptr, int sockfd){
 void print_list_info(Node** start_ptr_ptr){
     Node* next_ptr = *start_ptr_ptr;
     while(next_ptr){
-        printf("Identifier: %s,IP: %s \n", next_ptr->identifier,inet_ntoa(next_ptr->remote_conn->sin_addr));
+        printf("Identifier: %s,IP: %s \n", next_ptr->identifier,inet_ntoa(next_ptr->remote_conn->sin_addr.s_addr));
         next_ptr = next_ptr->next;
     }
 }
