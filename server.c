@@ -5,7 +5,6 @@
 #include <arpa/inet.h>
 #include <stdbool.h>
 #include <errno.h>
-#include <fcntl.h>
 #include "SLL.h"
 #include <poll.h>
 #include <time.h>
@@ -43,11 +42,13 @@ int export_connection_list(Node** client_list);
 int update_connection_list(char* identifier, sockaddr_in* remote_addr, time_t seconds);
 void send_connection_list(int sockfd);
 int server_init(void);
-int guard(int n, char * err) { if (n == -1) { perror(err); exit(1); } return n;}
 void receive(int new_sockfd, char* buffer);
 void check_client_list(Node** client_list);
 
 int main(){
+    //Print out server IP
+    system("hostname -I");
+
     //Start a Linked List to hold all the client connections
     Node* client_list = NULL;
 
@@ -66,7 +67,6 @@ int main(){
         if(errno == EWOULDBLOCK && new_sock == -1){
             sleep(1);
         }else{
-            printf("Adding new connection\n");
             add_connection(&client_list, new_sock, &new_addr);
             list_length++;
         }
@@ -153,8 +153,7 @@ int update_connection_list(char* identifier, sockaddr_in* remote_addr, time_t se
 
 int server_init(void){
     //Set up some variables to start the server
-    //char *ip = "0.0.0.0";
-    char *ip = "127.0.0.1";
+    char *ip = "0.0.0.0";
     int port = 10000;
     int e;
     int sockfd;

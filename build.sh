@@ -1,3 +1,0 @@
-rm connection*.txt
-gcc -g server.c SLL.c -o server
-gcc -g client.c SLL.c -o client

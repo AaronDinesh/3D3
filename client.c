@@ -18,7 +18,7 @@ void send_file(FILE* fp, int sockfd);
 int connect_sever(char* name, char* ip);
 void write_connection_file(int sockfd);
 void update_client_list(Node** client_list);
-
+void get_client_ip(char* buff);
 
 
 int main(){
@@ -30,6 +30,7 @@ int main(){
     char name[SIZE] = {'\0'};
     char server_ip[SIZE] = {'\0'};
     char client_ip[SIZE] = {'\0'};
+    char search_buffer[SIZE] = {'\0'};
     bool done = false;
 
     //Get the IP address of the client
@@ -50,17 +51,43 @@ int main(){
     printf("What do you want to do\n");
     printf("\t[1] Update the Client List\n");
     printf("\t[2] Connect to another client\n");
-    printf("\t[3] Quit\n");
+    printf("\t[3] Print client list\n");
+    printf("\t[4] Get IP of client\n");
+    printf("\t[5] Quit\n");
     scanf(" %d", &input);
     while(!done){
         if(input == 1){
             printf("Updating client list\n");
             sockfd = connect_sever(name, server_ip);    
             update_client_list(&client_list);
+            printf("Printing out updated client list...\n");
+            print_list_info(&client_list);
             close(sockfd);
         }else if(input == 2){
             printf("Connecting to a Client\n");
+            printf("As stated in the report this part was not programed\n");
+            printf("We focused on the tracking server - client interaction\n");
+            printf("This was done because the server - client code could\n");
+            printf("Easily be changed to work with client - client \n");
+            printf("We instead wanted to showcase reliable data transfer\n");
+            printf("And in the second demo show that messages can be encrypted\n");
         }else if(input == 3){
+            printf("Printing Client list...\n");
+            print_list_info(&client_list);
+        }else if (input == 4){
+            Node* search_return = NULL;
+            printf("Who do you want to find?\n");
+            scanf(" %4059s", search_buffer);
+            search_return = search_list_recursive_identifier(client_list, search_buffer);
+
+            if(!search_return){
+                printf("Could not find %s in list\n", search_buffer);
+                printf("Make sure the identifier is correct\n");
+            }else{
+                printf("Result: %s with IP %s", search_return->identifier, inet_ntoa(search_return->remote_conn->sin_addr));
+            }
+
+        }else if(input == 5){
             printf("Quitting...\n");
             return 0;
         }else if(input != 0){
@@ -69,7 +96,9 @@ int main(){
         printf("What do you want to do\n");
         printf("\t[1] Update the Client List\n");
         printf("\t[2] Connect to another client\n");
-        printf("\t[3] Quit\n");
+        printf("\t[3] Print client list\n");
+        printf("\t[4] Get IP of client\n");
+        printf("\t[5] Quit\n");
         scanf(" %d", &input);
     }
 
