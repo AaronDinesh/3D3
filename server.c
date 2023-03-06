@@ -240,6 +240,9 @@ void receive(int new_sockfd, char* buffer){
             default:
                 //Else receive all the bytes
                 bytes_recv = recv(new_sockfd, buffer, SIZE, 0);
+                if(bytes_recv == 0){
+                    done = true;
+                }
                 break;
         }
 
