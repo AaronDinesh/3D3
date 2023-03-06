@@ -72,9 +72,15 @@ int main(){
             printf("We instead wanted to showcase reliable data transfer\n");
             printf("And in the second demo show that messages can be encrypted\n");
         }else if(input == 3){
+            sockfd = connect_sever(name, server_ip);    
+            update_client_list(&client_list);
+            close(sockfd);
             printf("Printing Client list...\n");
             print_list_info(&client_list);
         }else if (input == 4){
+            sockfd = connect_sever(name, server_ip);    
+            update_client_list(&client_list);
+            close(sockfd);
             Node* search_return = NULL;
             printf("Who do you want to find?\n");
             scanf(" %4059s", search_buffer);
