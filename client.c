@@ -19,6 +19,7 @@ int connect_sever(char* name, char* ip);
 void write_connection_file(int sockfd);
 void update_client_list(Node** client_list);
 void get_client_ip(char* buff);
+bool isEmpty(char buff[]);
 
 
 int main(){
