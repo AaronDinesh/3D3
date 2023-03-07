@@ -120,7 +120,7 @@ int export_connection_list(Node** client_list){
     char long_str[10+sizeof(char)];
     FILE* fp = fopen(file_name, "w");
     if(!fp){
-        perror("Error opening connection_list.txt");
+        perror("Error opening connection_list_export.txt");
         exit(1);
     }
 
@@ -213,8 +213,6 @@ void send_connection_list(int sockfd){
     }
 
     fclose(fp);
-    //remove the file after you are done exporting
-    remove(file_name);
 }
 
 void receive(int new_sockfd, char* buffer){
