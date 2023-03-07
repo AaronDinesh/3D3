@@ -164,7 +164,7 @@ int connect_sever(char* name, char* ip){
     recv(sockfd, buffer, SIZE, 0);
 
     if(strcmp(buffer, "<IDEN>") == 0){
-        printf("Going to send name\n");
+        //printf("Going to send name\n");
         if(send(sockfd, name, sizeof(name), 0) == -1){
             perror("Error in sending name");
             exit(1);
@@ -211,7 +211,7 @@ void write_connection_file(int sockfd){
         default:
             bytes_recv = recv(sockfd, buffer, SIZE, 0);
             if(!isEmpty(buffer)){
-                printf("Received %s\n", buffer);
+                //printf("Received %s\n", buffer);
                 fprintf(file, "%s", buffer);
             }
             memset(buffer, 0, SIZE);
@@ -253,18 +253,15 @@ void update_client_list(Node** client_list){
             switch(i){
                 case 0:
                     strcpy(identifier, token);
-                    printf("%s\n", identifier);
                     i++;
                     break;
                 case 1:
 
                     strcpy(ip, token);
-                    printf("%s\n", ip);
                     i++;
                     break;
                 case 2:
                     seconds = atoll(token);
-                    printf("%ld\n", seconds);
                     i = 0;
                     break;
                 default:
