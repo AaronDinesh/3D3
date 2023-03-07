@@ -108,7 +108,7 @@ int add_connection(Node** client_list, int new_sockfd, sockaddr_in* remote_addr)
     //Send the connetion list to the client
     printf("Exporting and sending connection list\n");
     check_client_list(client_list);
-    export_connection_list(client_list);
+    //export_connection_list(client_list);
     send_connection_list(new_sockfd);
     memset(buffer, 0, SIZE);
     return 0;
@@ -200,7 +200,7 @@ void send_connection_list(int sockfd){
 
     
     //Open the connection_list_export.txt
-    char* file_name = "connection_list_export.txt";
+    char* file_name = "connection_list.txt";
     FILE* fp = fopen(file_name, "r");
 
     //Parse the file and send the data throgh sockfd

@@ -209,8 +209,10 @@ void write_connection_file(int sockfd){
             break;
         default:
             bytes_recv = recv(sockfd, buffer, SIZE, 0);
-            printf("Received %s\n", buffer);
-            fprintf(file, "%s", buffer);
+            if(!isEmpty(buffer)){
+                printf("Received %s\n", buffer);
+                fprintf(file, "%s", buffer);
+            }
             memset(buffer, 0, SIZE);
             break;
     }
@@ -234,7 +236,7 @@ void update_client_list(Node** client_list){
     }
 
     //Delete the existing client list
-    if(!(*client_list)){
+    if((*client_list)){
         delete_list(client_list);
     }
 
@@ -292,4 +294,13 @@ void get_client_ip(char* buff){
     printf("IP is: %s\n", buff);
     fclose(fp);
     remove("ip.txt");
+}
+
+bool isEmpty(char buff[]){
+    for(int i = 0; i < SIZE; i++){
+        if(buff[i] != '\0'){
+            return false;
+        }
+    }
+    return true;
 }
