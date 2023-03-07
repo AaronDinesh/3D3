@@ -241,6 +241,8 @@ void update_client_list(Node** client_list){
         delete_list(client_list);
     }
 
+    *client_list = NULL;
+
     char* token = NULL;
 
     //Read the file and update the client list
