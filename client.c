@@ -198,25 +198,25 @@ void write_connection_file(int sockfd){
 
     //While there is still something to read, read it. Timeout will occur in 1000 ms
     while(!done){
-    poll_ret = poll(&fd, 1, 4000);
-    switch(poll_ret){
-        case -1:
-            //There was an error
-            done = true;
-            break;
-        case 0:
-            //Time out happened
-            done = true;
-            break;
-        default:
-            bytes_recv = recv(sockfd, buffer, SIZE, 0);
-            if(!isEmpty(buffer)){
-                //printf("Received %s\n", buffer);
-                fprintf(file, "%s", buffer);
-            }
-            memset(buffer, 0, SIZE);
-            break;
-    }
+        poll_ret = poll(&fd, 1, 5000);
+        switch(poll_ret){
+            case -1:
+                //There was an error
+                done = true;
+                break;
+            case 0:
+                //Time out happened
+                done = true;
+                break;
+            default:
+                bytes_recv = recv(sockfd, buffer, SIZE, 0);
+                if(!isEmpty(buffer)){
+                    printf("Received %s\n", buffer);
+                    fprintf(file, "%s", buffer);
+                }
+                memset(buffer, 0, SIZE);
+                break;
+        }
     } 
 
     fclose(file);
@@ -253,15 +253,18 @@ void update_client_list(Node** client_list){
             switch(i){
                 case 0:
                     strcpy(identifier, token);
+                    printf("Identifier: %s, ",identifier);
                     i++;
                     break;
                 case 1:
 
                     strcpy(ip, token);
+                    printf("IP: %s, ",ip);
                     i++;
                     break;
                 case 2:
                     seconds = atoll(token);
+                    printf("Time of last connection: %ld\n",seconds);
                     i = 0;
                     break;
                 default:

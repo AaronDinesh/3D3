@@ -209,6 +209,7 @@ void send_connection_list(int sockfd){
             perror("Error in sending data");
             exit(1);
         }
+        sleep(1);
         memset(data, 0, SIZE);
     }
 
